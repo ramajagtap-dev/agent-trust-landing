@@ -1,48 +1,67 @@
 import React from 'react';
-import { BarChart3, ShieldCheck, AlertCircle } from 'lucide-react';
+import { BarChart2, ShieldCheck, RefreshCw, AlertTriangle, Info } from 'lucide-react';
 
 export default function Benchmark() {
-  const data = [
-    { agent: "Claude Code (Anthropic)", hallucination: "11.2%", recovery: "93.4%", status: "Safe", badge: "bg-emerald-950 text-emerald-400 border-emerald-800" },
-    { agent: "Cursor Coding Agent", hallucination: "15.8%", recovery: "87.1%", status: "Moderate", badge: "bg-amber-950 text-amber-400 border-amber-800" },
-    { agent: "GitHub Copilot Workspace", hallucination: "23.5%", recovery: "71.8%", status: "At Risk", badge: "bg-red-950 text-red-400 border-red-800" },
+  const benchmarkData = [
+    { agent: 'Claude Code (Sandbox)', hallucinationRate: '11.2%', recoveryRate: '93.4%', riskLevel: 'Safe Recovery' },
+    { agent: 'Cursor CLI (Sandbox)', hallucinationRate: '15.8%', recoveryRate: '87.1%', riskLevel: 'Moderate Recovery' },
+    { agent: 'GitHub Copilot (Sandbox)', hallucinationRate: '23.5%', recoveryRate: '71.8%', riskLevel: 'Unsafe Retry Risk' },
   ];
 
   return (
-    <section id="benchmark" className="py-20 bg-slate-950/60 border-y border-slate-800/80">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 text-accentGreen text-xs uppercase font-bold tracking-widest mb-2">
-            <BarChart3 className="w-4 h-4" /> Research Innovation
+    <div className="py-20 bg-[#0D131F]/60 border-t border-b border-gray-800/60 relative">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-4">
+            <BarChart2 className="w-3.5 h-3.5" />
+            <span>Research & Benchmarking</span>
           </div>
-          <p className="text-3xl font-bold text-white mb-4">Closed-Loop AI Coding Agent Benchmark</p>
-          <p className="text-gray-400 text-sm max-w-2xl mx-auto">
-            How do AI agents behave when unsafe or suspicious dependencies are intercepted? Measuring recovery rates without modifying underlying LLMs.
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            Closed-Loop Agent Recovery Benchmark
+          </h2>
+          <p className="mt-4 text-gray-400 text-base">
+            Evaluating how AI coding agents respond when hallucinated or untrusted package installation requests are intercepted in real time.
           </p>
         </div>
 
-        <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-x-auto shadow-2xl">
-          <table className="w-full text-left text-xs sm:text-sm text-gray-300">
-            <thead className="bg-slate-950 text-gray-400 uppercase text-[11px] border-b border-slate-800 font-mono">
+        {/* Disclaimer / Methodology Note */}
+        <div className="mb-8 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm flex items-start space-x-3">
+          <Info className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
+          <div>
+            <span className="font-semibold text-amber-200">Preliminary Benchmark Interface:</span> The metrics below represent illustrative execution runs from controlled sandbox experiments. Final empirical findings will be generated upon completion of full task-suite evaluation across diverse LLM temperature settings.
+          </div>
+        </div>
+
+        {/* Table Container */}
+        <div className="overflow-hidden rounded-2xl border border-gray-800 bg-[#0B0F17]/90 shadow-xl">
+          <table className="w-full text-left text-sm text-gray-300">
+            <thead className="bg-gray-900/80 text-xs uppercase tracking-wider text-gray-400 border-b border-gray-800">
               <tr>
-                <th className="p-4">AI Coding Agent</th>
-                <th className="p-4">Hallucination Frequency</th>
-                <th className="p-4">Recovery Success Rate</th>
-                <th className="p-4">Safety Profile</th>
+                <th scope="col" className="px-6 py-4">Tested AI Agent / Environment</th>
+                <th scope="col" className="px-6 py-4">Hallucinated Package Frequency</th>
+                <th scope="col" className="px-6 py-4">Closed-Loop Recovery Success Rate</th>
+                <th scope="col" className="px-6 py-4">Intervention Outcome</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/80">
-              {data.map((row, i) => (
-                <tr key={i} className="hover:bg-slate-800/40 transition">
-                  <td className="p-4 font-semibold text-white flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-accentCyan shrink-0" />
-                    {row.agent}
+            <tbody className="divide-y divide-gray-800/60">
+              {benchmarkData.map((row, index) => (
+                <tr key={index} className="hover:bg-gray-800/30 transition-colors">
+                  <td className="px-6 py-4 font-semibold text-white flex items-center space-x-2">
+                    <span>{row.agent}</span>
                   </td>
-                  <td className="p-4 font-mono text-amber-400">{row.hallucination}</td>
-                  <td className="p-4 font-mono text-emerald-400">{row.recovery}</td>
-                  <td className="p-4">
-                    <span className={`px-2.5 py-1 rounded text-[11px] font-semibold border ${row.badge}`}>
-                      {row.status}
+                  <td className="px-6 py-4 font-mono text-cyan-400">{row.hallucinationRate}</td>
+                  <td className="px-6 py-4 font-mono text-emerald-400">{row.recoveryRate}</td>
+                  <td className="px-6 py-4">
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
+                      row.riskLevel.includes('Safe') 
+                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
+                        : row.riskLevel.includes('Moderate')
+                        ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
+                        : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                    }`}>
+                      {row.riskLevel}
                     </span>
                   </td>
                 </tr>
@@ -51,11 +70,23 @@ export default function Benchmark() {
           </table>
         </div>
 
-        <div className="mt-6 flex items-center gap-2 text-xs text-gray-500 justify-center">
-          <AlertCircle className="w-4 h-4 text-gray-400" />
-          <span>Benchmark evaluation dataset constructed using open-loop prompt responses & closed-loop Docker sandbox runs.</span>
+        {/* Experimental Variables */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+          <div className="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+            <span className="text-xs text-gray-500 uppercase tracking-wide">Test Variable 01</span>
+            <p className="text-sm font-semibold text-gray-200 mt-1">LLM Temperature Settings (0.0 to 0.8)</p>
+          </div>
+          <div className="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+            <span className="text-xs text-gray-500 uppercase tracking-wide">Test Variable 02</span>
+            <p className="text-sm font-semibold text-gray-200 mt-1">Ecosystems (npm, PyPI, Crates)</p>
+          </div>
+          <div className="p-4 rounded-xl bg-gray-900/40 border border-gray-800">
+            <span className="text-xs text-gray-500 uppercase tracking-wide">Test Variable 03</span>
+            <p className="text-sm font-semibold text-gray-200 mt-1">Agent Action (Stop, Retry, Substitute)</p>
+          </div>
         </div>
+
       </div>
-    </section>
+    </div>
   );
 }
